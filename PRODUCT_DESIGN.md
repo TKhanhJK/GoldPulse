@@ -112,3 +112,4 @@ Thị trường vàng tại Việt Nam có tính biến động cao và chịu �
   - Unit test cho Adapter bóc tách dữ liệu & Crawler Engine.
   - Integration test cho các API Routes.
 - **Quy trình Git**: Tạo commit rõ ràng sau mỗi giai đoạn hoàn thành theo nguyên tắc dự án.
+
