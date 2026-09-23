@@ -1,6 +1,19 @@
 import type { Metadata } from 'next';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Coins } from 'lucide-react';
+
+const inter = Inter({
+  subsets: ['latin', 'vietnamese'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'vietnamese'],
+  display: 'swap',
+  variable: '--font-jetbrains',
+});
 
 export const metadata: Metadata = {
   title: 'GoldPulse — Nền tảng Theo dõi Giá vàng & Tin tức Chính sách Việt Nam',
@@ -13,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-amber-100 selection:text-amber-900">
+    <html lang="vi" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans antialiased selection:bg-amber-100 selection:text-amber-900">
         {/* Navigation Header */}
         <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -29,7 +42,7 @@ export default function RootLayout({
                     GoldPulse
                   </span>
                   <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-                    Fintech Light
+                    Fintech UI
                   </span>
                 </div>
                 <p className="text-[10px] text-slate-500 hidden sm:block">
@@ -70,11 +83,11 @@ export default function RootLayout({
               <span>— Nền tảng Theo dõi Giá vàng & Tin tức Chính sách Việt Nam</span>
             </div>
             <div className="flex items-center space-x-4 text-slate-400">
-              <span>Next.js 15 App Router</span>
+              <span>Inter + JetBrains Mono</span>
               <span>•</span>
-              <span>Prisma ORM</span>
+              <span>Tabular Figures</span>
               <span>•</span>
-              <span>Fintech Minimalist</span>
+              <span>Fintech Typography</span>
             </div>
           </div>
         </footer>

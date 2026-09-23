@@ -41,7 +41,12 @@ export function NewsHub({ initialNews }: NewsHubProps) {
   }, [currentPage]);
 
   const items = newsData?.data || [];
-  const pagination = newsData?.pagination || { page: 1, limit: 6, totalItems: 0, totalPages: 1 };
+  const pagination = newsData?.pagination || {
+    page: 1,
+    limit: 6,
+    totalItems: 0,
+    totalPages: 1,
+  };
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs mb-12">

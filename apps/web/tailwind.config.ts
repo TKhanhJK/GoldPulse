@@ -8,10 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['var(--font-jetbrains)', 'ui-monospace', 'monospace'],
+      },
       colors: {
-        background: '#0B0F19',
-        card: '#111827',
-        cardBorder: '#1F2937',
+        background: '#F8FAFC',
+        card: '#FFFFFF',
+        cardBorder: '#E2E8F0',
         gold: {
           50: '#FFFDF5',
           100: '#FEF9C3',
@@ -36,4 +40,3 @@ const config: Config = {
 };
 
 export default config;
-
