@@ -115,3 +115,31 @@ export interface MarketOverviewStats {
   marketTrend: 'UP' | 'DOWN' | 'STABLE';
   lastUpdated: string;
 }
+
+// 6. AI & Machine Learning Price Forecasting DTOs
+export interface ForecastPoint {
+  timestamp: string;
+  forecastPrice: number;
+  lowerBound: number;
+  upperBound: number;
+  confidence: number;
+}
+
+export interface TechnicalIndicators {
+  rsi: number;              // Relative Strength Index 14 ngày (0 - 100)
+  sma7: number;             // Simple Moving Average 7 ngày
+  sma20: number;            // Simple Moving Average 20 ngày
+  trendSignal: 'ACCUMULATE' | 'TAKE_PROFIT' | 'NEUTRAL'; // Tín hiệu gợi ý thị trường
+  signalReason: string;     // Lý giải chi tiết từ mô hình định lượng
+  volatility: number;       // Biên độ biến động giá gần nhất (%)
+}
+
+export interface PriceForecastResponse {
+  success: boolean;
+  symbol: string;
+  currentPrice: number;
+  forecastDays: number;
+  indicators: TechnicalIndicators;
+  forecastPoints: ForecastPoint[];
+  historicalPoints: PriceHistoryPoint[];
+}

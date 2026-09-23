@@ -71,3 +71,4 @@ export class CafefNewsAdapter implements INewsAdapter {
     ];
   }
 }
+

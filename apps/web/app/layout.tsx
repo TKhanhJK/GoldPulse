@@ -55,6 +55,10 @@ export default function RootLayout({
             <nav className="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-600">
               <a href="#stats" className="hover:text-amber-600 transition-colors">Tổng Quan</a>
               <a href="#chart" className="hover:text-amber-600 transition-colors">Biểu Đồ</a>
+              <a href="#forecast" className="hover:text-purple-600 text-purple-700 font-bold flex items-center transition-colors">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-600 mr-1.5 animate-pulse"></span>
+                Dự Báo AI
+              </a>
               <a href="#table" className="hover:text-amber-600 transition-colors">Bảng Giá</a>
               <a href="#news" className="hover:text-amber-600 transition-colors">Chính Sách</a>
             </nav>

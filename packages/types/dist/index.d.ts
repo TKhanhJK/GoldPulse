@@ -97,4 +97,28 @@ export interface MarketOverviewStats {
     marketTrend: 'UP' | 'DOWN' | 'STABLE';
     lastUpdated: string;
 }
+export interface ForecastPoint {
+    timestamp: string;
+    forecastPrice: number;
+    lowerBound: number;
+    upperBound: number;
+    confidence: number;
+}
+export interface TechnicalIndicators {
+    rsi: number;
+    sma7: number;
+    sma20: number;
+    trendSignal: 'ACCUMULATE' | 'TAKE_PROFIT' | 'NEUTRAL';
+    signalReason: string;
+    volatility: number;
+}
+export interface PriceForecastResponse {
+    success: boolean;
+    symbol: string;
+    currentPrice: number;
+    forecastDays: number;
+    indicators: TechnicalIndicators;
+    forecastPoints: ForecastPoint[];
+    historicalPoints: PriceHistoryPoint[];
+}
 //# sourceMappingURL=index.d.ts.map

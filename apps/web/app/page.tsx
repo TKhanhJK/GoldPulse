@@ -2,6 +2,7 @@ import { getLatestPricesData, getNewsData } from '@/lib/api-services';
 import { MarketTicker } from '@/components/market-ticker';
 import { StatCards } from '@/components/stat-cards';
 import { PriceChart } from '@/components/price-chart';
+import { AiForecastPanel } from '@/components/ai-forecast-panel';
 import { PriceTable } from '@/components/price-table';
 import { NewsHub } from '@/components/news-hub';
 import { formatDateVN } from '@/lib/formatters';
@@ -59,12 +60,17 @@ export default async function HomePage() {
           <PriceChart initialSymbol="SJC_1L" initialRange="7d" />
         </section>
 
-        {/* 4. Bảng Giá Thị Trường Chi Tiết (Price Table) */}
+        {/* 4. Mô Hình Dự Báo AI & Chỉ Báo Kỹ Thuật (Machine Learning Forecast) */}
+        <section id="forecast">
+          <AiForecastPanel />
+        </section>
+
+        {/* 5. Bảng Giá Thị Trường Chi Tiết (Price Table) */}
         <section id="table">
           <PriceTable prices={prices} />
         </section>
 
-        {/* 5. Trung Tâm Tin Tức & Chính Sách Vàng (News Hub) */}
+        {/* 6. Trung Tâm Tin Tức & Chính Sách Vàng (News Hub) */}
         <section id="news">
           <NewsHub initialNews={initialNews} />
         </section>
