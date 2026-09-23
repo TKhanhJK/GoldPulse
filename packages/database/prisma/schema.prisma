@@ -1,0 +1,45 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. Dữ liệu Giá vàng theo từng thời điểm
+model GoldPrice {
+  id        String   @id @default(uuid())
+  symbol    String   // Mã định danh loại vàng (ví dụ: SJC_1L, DOJI_HN, PNJ_24K)
+  name      String   // Tên hiển thị (ví dụ: "Vàng miếng SJC 1L - 10L")
+  buyPrice  Float    // Giá mua vào (triệu VNĐ/lượng)
+  sellPrice Float    // Giá bán ra (triệu VNĐ/lượng)
+  source    String   // Nguồn dữ liệu (SJC, DOJI, PNJ)
+  createdAt DateTime @default(now())
+
+  @@index([symbol, createdAt])
+  @@index([createdAt])
+}
+
+// 2. Trung tâm Tin tức & Chính sách Vàng
+model News {
+  id          String   @id @default(uuid())
+  title       String   // Tiêu đề tin tức
+  summary     String   // Tóm tắt nội dung chính sách
+  source      String   // Cơ quan ban hành / Nguồn báo (NHNN, Báo Đầu Tư...)
+  url         String   // Liên kết bài viết gốc
+  publishedAt DateTime // Ngày công bố chính sách
+  createdAt   DateTime @default(now())
+
+  @@index([publishedAt])
+}
+
+// 3. Nhật ký Vận hành Crawler (Audit & Monitoring)
+model CrawlLog {
+  id         String   @id @default(uuid())
+  source     String   // Nguồn crawl (SJC, DOJI, PNJ hoặc ALL)
+  status     String   // SUCCESS | PARTIAL | FAILED
+  itemsCount Int      @default(0)
+  error      String?  // Ghi log chi tiết lỗi nếu có
+  createdAt  DateTime @default(now())
+}
