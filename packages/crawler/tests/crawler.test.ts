@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
-import { normalizePrice, IGoldPriceAdapter, ScrapedGoldPrice } from '../src/adapters/base.js';
-import { SjcAdapter } from '../src/adapters/sjc.adapter.js';
-import { DojiAdapter } from '../src/adapters/doji.adapter.js';
-import { PnjAdapter } from '../src/adapters/pnj.adapter.js';
-import { CrawlerService } from '../src/crawler.service.js';
+import { normalizePrice, IGoldPriceAdapter, ScrapedGoldPrice } from '../src/adapters/base';
+import { SjcAdapter } from '../src/adapters/sjc.adapter';
+import { DojiAdapter } from '../src/adapters/doji.adapter';
+import { PnjAdapter } from '../src/adapters/pnj.adapter';
+import { CrawlerService } from '../src/crawler.service';
 import { prisma } from '@goldpulse/database';
 
 describe('Crawler Engine & Adapter Pattern Tests', () => {

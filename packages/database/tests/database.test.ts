@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { prisma } from '../src/client.js';
+import { prisma } from '../src/client';
 
 describe('Database Layer Verification', () => {
   beforeAll(async () => {

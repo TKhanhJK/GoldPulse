@@ -1,8 +1,8 @@
 import { prisma as defaultPrisma, PrismaClient } from '@goldpulse/database';
 import { IGoldPriceAdapter, ScrapedGoldPrice, CrawlResult, CrawlLogItem } from '@goldpulse/types';
-import { SjcAdapter } from './adapters/sjc.adapter.js';
-import { DojiAdapter } from './adapters/doji.adapter.js';
-import { PnjAdapter } from './adapters/pnj.adapter.js';
+import { SjcAdapter } from './adapters/sjc.adapter';
+import { DojiAdapter } from './adapters/doji.adapter';
+import { PnjAdapter } from './adapters/pnj.adapter';
 
 export class CrawlerService {
   private adapters: IGoldPriceAdapter[] = [];

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { IGoldPriceAdapter, ScrapedGoldPrice, normalizePrice } from './base.js';
+import { IGoldPriceAdapter, ScrapedGoldPrice, normalizePrice } from './base';
 
 export class SjcAdapter implements IGoldPriceAdapter {
   readonly source = 'SJC';

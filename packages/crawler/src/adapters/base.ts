@@ -1,6 +1,6 @@
-import { ScrapedGoldPrice, IGoldPriceAdapter } from '@goldpulse/types';
+import type { ScrapedGoldPrice, IGoldPriceAdapter } from '@goldpulse/types';
 
-export { ScrapedGoldPrice, IGoldPriceAdapter };
+export type { ScrapedGoldPrice, IGoldPriceAdapter };
 
 /**
  * Hàm chuẩn hóa chuỗi giá số liệu tiếng Việt sang số thực (triệu VNĐ/lượng)
