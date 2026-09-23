@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.git
+.gitignore
+*.log
+dev.db
+dev.db-journal
+packages/database/dev.db
+packages/database/dev.db-journal
