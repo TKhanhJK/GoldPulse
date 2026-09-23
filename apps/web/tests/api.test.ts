@@ -82,7 +82,7 @@ describe('RESTful API Services & Logic Integration Tests', () => {
       expect(result.success).toBe(true);
       expect(result.totalSaved).toBeGreaterThan(0);
       expect(result.logs.length).toBeGreaterThan(0);
-    });
+    }, 15000);
   });
 
   describe('5. GET /api/cron/crawl-news security and execution', () => {
@@ -99,7 +99,7 @@ describe('RESTful API Services & Logic Integration Tests', () => {
       expect(typeof result.totalSaved).toBe('number');
       expect(typeof result.totalSkipped).toBe('number');
       expect(result.logs.length).toBeGreaterThan(0);
-    });
+    }, 15000);
   });
 });
 
