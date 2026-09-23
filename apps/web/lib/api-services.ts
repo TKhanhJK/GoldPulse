@@ -1,6 +1,6 @@
 import { prisma } from '@goldpulse/database';
-import { GoldPriceItem, LatestPricesResponse, PriceHistoryPoint, PriceHistoryResponse, NewsPaginationResponse, CrawlResult } from '@goldpulse/types';
-import { CrawlerService } from '@goldpulse/crawler';
+import { GoldPriceItem, LatestPricesResponse, PriceHistoryPoint, PriceHistoryResponse, NewsPaginationResponse, CrawlResult, NewsCrawlResult } from '@goldpulse/types';
+import { CrawlerService, NewsCrawlerService } from '@goldpulse/crawler';
 
 /**
  * Lấy danh sách giá vàng mới nhất, tự động tính toán biến động deltaBuy, deltaSell và spread
@@ -173,5 +173,24 @@ export async function executeCrawlerCron(authHeader?: string | null): Promise<Cr
 
   const crawler = new CrawlerService();
   return await crawler.crawlAll();
+}
+
+/**
+ * Thực thi crawler tin tức chính sách định kỳ bảo mật bằng CRON_SECRET
+ */
+export async function executeNewsCrawlerCron(authHeader?: string | null): Promise<NewsCrawlResult> {
+  const expectedSecret = process.env.CRON_SECRET || 'goldpulse_secret_key_super_secure_2026';
+  
+  if (!authHeader) {
+    throw new Error('UNAUTHORIZED: Thiếu header xác thực Authorization');
+  }
+
+  const token = authHeader.replace(/^Bearer\s+/i, '').trim();
+  if (token !== expectedSecret) {
+    throw new Error('UNAUTHORIZED: Token CRON_SECRET không hợp lệ');
+  }
+
+  const newsCrawler = new NewsCrawlerService();
+  return await newsCrawler.crawlAllNews();
 }
 

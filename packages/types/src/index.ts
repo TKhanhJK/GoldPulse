@@ -1,8 +1,8 @@
-// 1. Crawler & Adapter Interfaces
+// 1. Crawler & Adapter Interfaces (Gold Price)
 export interface ScrapedGoldPrice {
   symbol: string;
   name: string;
-  buyPrice: number;   // Triệu VNĐ / lượng (hoặc VNĐ, được chuẩn hóa theo triệu VNĐ/lượng ví dụ 88.5 = 88.500.000đ)
+  buyPrice: number;   // Triệu VNĐ / lượng (chuẩn hóa theo triệu VNĐ/lượng ví dụ 88.5 = 88.500.000đ)
   sellPrice: number;  // Triệu VNĐ / lượng
   source: string;     // SJC, DOJI, PNJ
 }
@@ -10,6 +10,28 @@ export interface ScrapedGoldPrice {
 export interface IGoldPriceAdapter {
   readonly source: string;
   fetchPrices(): Promise<ScrapedGoldPrice[]>;
+}
+
+// 2. Crawler & Adapter Interfaces (News & Policy)
+export interface ScrapedNewsItem {
+  title: string;
+  summary: string;
+  source: string;
+  url: string;
+  publishedAt: Date | string;
+}
+
+export interface INewsAdapter {
+  readonly source: string;
+  fetchNews(): Promise<ScrapedNewsItem[]>;
+}
+
+export interface NewsCrawlResult {
+  success: boolean;
+  totalSaved: number;
+  totalSkipped: number;
+  logs: CrawlLogItem[];
+  timestamp: string;
 }
 
 export interface CrawlLogItem {
@@ -28,7 +50,7 @@ export interface CrawlResult {
   timestamp: string;
 }
 
-// 2. Gold Price API DTOs
+// 3. Gold Price API DTOs
 export interface GoldPriceItem {
   id?: string;
   symbol: string;
@@ -61,7 +83,7 @@ export interface PriceHistoryResponse {
   data: PriceHistoryPoint[];
 }
 
-// 3. News & Policy DTOs
+// 4. News & Policy DTOs
 export interface NewsItem {
   id: string;
   title: string;
@@ -83,7 +105,7 @@ export interface NewsPaginationResponse {
   data: NewsItem[];
 }
 
-// 4. Market Overview & Dashboard DTOs
+// 5. Market Overview & Dashboard DTOs
 export interface MarketOverviewStats {
   sjcBuyPrice: number;
   sjcSellPrice: number;
@@ -93,4 +115,3 @@ export interface MarketOverviewStats {
   marketTrend: 'UP' | 'DOWN' | 'STABLE';
   lastUpdated: string;
 }
-

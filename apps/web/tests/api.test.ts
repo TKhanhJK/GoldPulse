@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { getLatestPricesData, getPriceHistoryData, getNewsData, executeCrawlerCron } from '../lib/api-services';
+import { getLatestPricesData, getPriceHistoryData, getNewsData, executeCrawlerCron, executeNewsCrawlerCron } from '../lib/api-services';
 import { prisma } from '@goldpulse/database';
 
 describe('RESTful API Services & Logic Integration Tests', () => {
@@ -81,6 +81,23 @@ describe('RESTful API Services & Logic Integration Tests', () => {
 
       expect(result.success).toBe(true);
       expect(result.totalSaved).toBeGreaterThan(0);
+      expect(result.logs.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('5. GET /api/cron/crawl-news security and execution', () => {
+    it('nên từ chối khi không có token Authorization hoặc token sai', async () => {
+      await expect(executeNewsCrawlerCron(null)).rejects.toThrow('UNAUTHORIZED');
+      await expect(executeNewsCrawlerCron('Bearer sai_token_tin_tuc')).rejects.toThrow('UNAUTHORIZED');
+    });
+
+    it('nên thực thi crawl tin tức thành công khi có đúng CRON_SECRET', async () => {
+      const validSecret = process.env.CRON_SECRET || 'goldpulse_secret_key_super_secure_2026';
+      const result = await executeNewsCrawlerCron(`Bearer ${validSecret}`);
+
+      expect(result.success).toBe(true);
+      expect(typeof result.totalSaved).toBe('number');
+      expect(typeof result.totalSkipped).toBe('number');
       expect(result.logs.length).toBeGreaterThan(0);
     });
   });

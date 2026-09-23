@@ -9,6 +9,24 @@ export interface IGoldPriceAdapter {
     readonly source: string;
     fetchPrices(): Promise<ScrapedGoldPrice[]>;
 }
+export interface ScrapedNewsItem {
+    title: string;
+    summary: string;
+    source: string;
+    url: string;
+    publishedAt: Date | string;
+}
+export interface INewsAdapter {
+    readonly source: string;
+    fetchNews(): Promise<ScrapedNewsItem[]>;
+}
+export interface NewsCrawlResult {
+    success: boolean;
+    totalSaved: number;
+    totalSkipped: number;
+    logs: CrawlLogItem[];
+    timestamp: string;
+}
 export interface CrawlLogItem {
     id?: string;
     source: string;
