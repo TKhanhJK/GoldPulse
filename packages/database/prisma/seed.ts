@@ -4,6 +4,9 @@ async function main() {
   console.log('--- Đang bắt đầu quá trình Seed Dữ liệu GoldPulse ---');
 
   // 1. Dọn dẹp dữ liệu cũ nếu có
+  await prisma.alertLog.deleteMany({});
+  await prisma.priceAlert.deleteMany({});
+  await prisma.user.deleteMany({});
   await prisma.goldPrice.deleteMany({});
   await prisma.news.deleteMany({});
   await prisma.crawlLog.deleteMany({});
@@ -138,15 +141,92 @@ async function main() {
   console.log(`-> Đã seed ${pricesToCreate.length} bản ghi lịch sử giá vàng 30 ngày.`);
 
   // 4. Seed Audit log crawl mẫu
-  await prisma.crawlLog.create({
+  await prisma.crawlLog.createMany({
+    data: [
+      {
+        source: 'ALL',
+        status: 'SUCCESS',
+        itemsCount: symbols.length,
+        createdAt: latestNow,
+      },
+      {
+        source: 'SJC',
+        status: 'SUCCESS',
+        itemsCount: 2,
+        createdAt: new Date(now.getTime() - 35 * 60 * 1000),
+      },
+      {
+        source: 'DOJI',
+        status: 'SUCCESS',
+        itemsCount: 3,
+        createdAt: new Date(now.getTime() - 65 * 60 * 1000),
+      },
+      {
+        source: 'NEWS_SBV',
+        status: 'SUCCESS',
+        itemsCount: 4,
+        createdAt: new Date(now.getTime() - 120 * 60 * 1000),
+      },
+    ],
+  });
+  console.log('-> Đã seed 4 nhật ký CrawlLog mẫu.');
+
+  // 5. Seed Tài khoản Quản trị viên (ADMIN) và Người dùng tiêu biểu
+  const adminPasswordHash = '$2b$10$rJHSy0MOKD3RDWWPCjlxdeMfnWTPA3Gj29zYerUj39e4hvQKLYDCK'; // AdminPassword2026@
+  const adminUser = await prisma.user.create({
     data: {
-      source: 'ALL',
-      status: 'SUCCESS',
-      itemsCount: symbols.length,
-      createdAt: latestNow,
+      email: 'admin@goldpulse.vn',
+      passwordHash: adminPasswordHash,
+      name: 'GoldPulse System Admin',
+      role: 'ADMIN',
     },
   });
 
+  const normalUser = await prisma.user.create({
+    data: {
+      email: 'investor@goldpulse.vn',
+      passwordHash: adminPasswordHash,
+      name: 'Nguyễn Hoàng Long',
+      role: 'USER',
+    },
+  });
+
+  console.log('-> Đã seed tài khoản Admin (admin@goldpulse.vn) và User (investor@goldpulse.vn).');
+
+  // 6. Seed Quy tắc Cảnh báo giá và Nhật ký gửi email mẫu
+  const alert1 = await prisma.priceAlert.create({
+    data: {
+      userId: normalUser.id,
+      symbol: 'SJC_1L',
+      targetPrice: 89.0,
+      condition: 'ABOVE',
+      isActive: true,
+      lastTriggeredAt: new Date(now.getTime() - 30 * 60 * 1000),
+    },
+  });
+
+  await prisma.priceAlert.create({
+    data: {
+      userId: normalUser.id,
+      symbol: 'DOJI_HN',
+      targetPrice: 86.5,
+      condition: 'BELOW',
+      isActive: true,
+    },
+  });
+
+  await prisma.alertLog.create({
+    data: {
+      alertId: alert1.id,
+      sentPrice: 89.2,
+      sentToEmail: normalUser.email,
+      status: 'SUCCESS',
+      message: 'Cảnh báo giá kích hoạt: ABOVE 89.0 tr/lượng (giá thực tế: 89.2)',
+      createdAt: new Date(now.getTime() - 30 * 60 * 1000),
+    },
+  });
+
+  console.log('-> Đã seed quy tắc PriceAlert và nhật ký AlertLog.');
   console.log('--- Hoàn tất quá trình Seed Dữ liệu thành công 100%! ---');
 }
 

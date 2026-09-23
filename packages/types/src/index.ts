@@ -194,3 +194,38 @@ export interface AlertCheckResult {
   totalTriggered: number;
   triggeredAlertIds: string[];
 }
+
+// 9. Admin Dashboard DTOs
+export interface AdminSystemStats {
+  totalUsers: number;
+  totalAlerts: number;
+  activeAlerts: number;
+  totalCrawls: number;
+  successfulCrawls: number;
+  totalNews: number;
+  totalPriceRecords: number;
+  totalAlertLogs: number;
+}
+
+export interface AdminUserItem {
+  id: string;
+  email: string;
+  name: string | null;
+  role: string;
+  alertsCount: number;
+  createdAt: string;
+}
+
+export interface AdminAlertItem {
+  id: string;
+  userId: string;
+  userEmail: string;
+  userName: string | null;
+  symbol: string;
+  targetPrice: number;
+  condition: string;
+  isActive: boolean;
+  lastTriggeredAt: string | null;
+  createdAt: string;
+}
+

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { GoldPriceItem, NewsPaginationResponse, UserSession } from '@goldpulse/types';
 import { MarketTicker } from './market-ticker';
 import { StatCards } from './stat-cards';
@@ -11,7 +12,7 @@ import { NewsHub } from './news-hub';
 import { AuthModal } from './auth-modal';
 import { PriceAlertModal } from './price-alert-modal';
 import { formatDateVN } from '@/lib/formatters';
-import { Sparkles, RefreshCw, Bell, User as UserIcon, LogOut, LogIn } from 'lucide-react';
+import { Sparkles, RefreshCw, Bell, User as UserIcon, LogOut, LogIn, Shield } from 'lucide-react';
 
 interface DashboardShellProps {
   prices: GoldPriceItem[];
@@ -87,6 +88,17 @@ export function DashboardShell({ prices, initialNews, updatedAt }: DashboardShel
               <Bell className="w-3.5 h-3.5 text-amber-600 animate-bounce" />
               <span>Cảnh báo giá</span>
             </button>
+
+            {/* Nút vào Trang Quản Trị (chỉ hiện khi là ADMIN) */}
+            {user?.role === 'ADMIN' && (
+              <Link
+                href="/admin"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-amber-400 border border-slate-700 transition-all shadow-2xs"
+              >
+                <Shield className="w-3.5 h-3.5 text-amber-400" />
+                <span>Trang Quản Trị</span>
+              </Link>
+            )}
 
             {/* Trạng thái tài khoản người dùng */}
             {user ? (
@@ -213,3 +225,4 @@ export function DashboardShell({ prices, initialNews, updatedAt }: DashboardShel
     </div>
   );
 }
+

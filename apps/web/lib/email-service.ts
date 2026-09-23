@@ -153,3 +153,4 @@ export async function sendPriceAlertEmail(params: SendAlertEmailParams): Promise
     simulated: true,
   };
 }
+

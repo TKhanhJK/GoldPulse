@@ -106,3 +106,4 @@ export async function getUserFromRequest(request: Request): Promise<UserSession 
     role: (user.role as 'USER' | 'ADMIN') || 'USER',
   };
 }
+

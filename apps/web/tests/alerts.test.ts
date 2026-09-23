@@ -171,3 +171,4 @@ describe('Price Alert Engine & Notification Service Tests', () => {
     expect(result.triggeredAlertIds).toContain(testAlertIdBelow);
   });
 });
+

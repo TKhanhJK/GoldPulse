@@ -193,3 +193,4 @@ export function AuthModal({ isOpen, onClose, onSuccess, initialMode = 'login' }:
     </div>
   );
 }
+
