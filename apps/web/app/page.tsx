@@ -5,7 +5,7 @@ import { PriceChart } from '@/components/price-chart';
 import { PriceTable } from '@/components/price-table';
 import { NewsHub } from '@/components/news-hub';
 import { formatDateVN } from '@/lib/formatters';
-import { RefreshCw, ShieldAlert, Sparkles } from 'lucide-react';
+import { RefreshCw, Sparkles } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,32 +16,32 @@ export default async function HomePage() {
   const prices = latestResponse.data;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-slate-50">
       {/* 1. Market Ticker Bar trên đỉnh */}
       <MarketTicker prices={prices} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         {/* Hero Section */}
         <section className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200">
             <div>
-              <div className="inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/20 mb-3">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-                Cập nhật liên tục 24/7 theo thời gian thực
+              <div className="inline-flex items-center text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 mb-3 shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5 text-amber-600" />
+                Dữ liệu trực tiếp theo thời gian thực 24/7
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Thị Trường Giá Vàng & Chính Sách Điều Hành
               </h1>
-              <p className="text-sm text-slate-400 mt-1.5 max-w-2xl">
+              <p className="text-sm text-slate-600 mt-1.5 max-w-2xl leading-relaxed">
                 Hệ thống tự động tổng hợp giá vàng miếng SJC, DOJI, PNJ, tính toán mức chênh lệch Mua - Bán (Spread) và cập nhật tin tức pháp lý vĩ mô từ Ngân hàng Nhà nước.
               </p>
             </div>
 
-            <div className="flex items-center self-start md:self-auto bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs">
-              <RefreshCw className="w-4 h-4 text-gold-500 mr-2.5 animate-spin-slow" />
+            <div className="flex items-center self-start md:self-auto bg-white border border-slate-200 rounded-2xl px-4 py-3 text-xs shadow-xs">
+              <RefreshCw className="w-4 h-4 text-amber-600 mr-2.5 animate-spin-slow" />
               <div>
-                <span className="text-slate-400 block text-[11px]">Phiên cập nhật gần nhất</span>
-                <span className="text-white font-mono font-semibold">
+                <span className="text-slate-400 block text-[11px] font-medium">Phiên cập nhật gần nhất</span>
+                <span className="text-slate-900 font-mono font-bold">
                   {formatDateVN(latestResponse.updatedAt)}
                 </span>
               </div>

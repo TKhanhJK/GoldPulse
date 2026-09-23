@@ -93,3 +93,4 @@ export interface MarketOverviewStats {
   marketTrend: 'UP' | 'DOWN' | 'STABLE';
   lastUpdated: string;
 }
+

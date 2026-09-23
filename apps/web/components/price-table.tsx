@@ -19,29 +19,29 @@ export function PriceTable({ prices }: PriceTableProps) {
     : prices.filter((p) => p.source.toUpperCase() === selectedSource);
 
   return (
-    <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 shadow-lg backdrop-blur mb-8">
+    <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs mb-8">
       {/* Table Header & Brand Filter Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-800/80 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-100 gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white tracking-tight flex items-center">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 mr-2.5"></span>
+          <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5"></span>
             Bảng Giá Thị Trường Chi Tiết
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Niêm yết giá mua vào - bán ra chính thức từ các doanh nghiệp kinh doanh vàng uy tín
           </p>
         </div>
 
         {/* Source Filter Tabs */}
-        <div className="inline-flex rounded-lg border border-slate-700 bg-slate-800/80 p-0.5 text-xs">
+        <div className="inline-flex rounded-xl border border-slate-200 bg-slate-100 p-0.5 text-xs">
           {sources.map((src) => (
             <button
               key={src}
               onClick={() => setSelectedSource(src)}
-              className={`px-3 py-1.5 rounded-md font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
                 selectedSource === src
-                  ? 'bg-gold-500 text-slate-950 shadow font-semibold'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-amber-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               {src === 'ALL' ? 'Tất cả nguồn' : src}
@@ -51,10 +51,10 @@ export function PriceTable({ prices }: PriceTableProps) {
       </div>
 
       {/* Table Content */}
-      <div className="overflow-x-auto mt-4">
+      <div className="overflow-x-auto mt-4 rounded-xl border border-slate-100">
         <table className="w-full text-left text-xs whitespace-nowrap">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+            <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-600 uppercase tracking-wider font-semibold">
               <th className="py-3 px-4">Loại Vàng</th>
               <th className="py-3 px-4">Đơn Vị</th>
               <th className="py-3 px-4 text-right">Giá Mua Vào</th>
@@ -65,10 +65,10 @@ export function PriceTable({ prices }: PriceTableProps) {
               <th className="py-3 px-4 text-right">Cập Nhật</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60 font-mono">
+          <tbody className="divide-y divide-slate-100 font-mono">
             {filteredPrices.length === 0 ? (
               <tr>
-                <td colSpan={8} className="py-8 text-center text-slate-500 font-sans">
+                <td colSpan={8} className="py-8 text-center text-slate-400 font-sans">
                   Không có dữ liệu giá nào phù hợp với bộ lọc
                 </td>
               </tr>
@@ -83,34 +83,34 @@ export function PriceTable({ prices }: PriceTableProps) {
                 return (
                   <tr
                     key={item.symbol}
-                    className="hover:bg-slate-800/40 transition-colors group"
+                    className="hover:bg-amber-50/20 transition-colors group"
                   >
                     {/* Loại vàng */}
-                    <td className="py-3.5 px-4 font-sans font-semibold text-white group-hover:text-gold-400 transition-colors">
+                    <td className="py-3.5 px-4 font-sans font-semibold text-slate-900 group-hover:text-amber-700 transition-colors">
                       {item.name}
                     </td>
 
                     {/* Đơn vị cung cấp */}
                     <td className="py-3.5 px-4">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-sans font-medium bg-slate-800 text-gold-400 border border-slate-700">
-                        <ShieldCheck className="w-3 h-3 mr-1 text-gold-500" />
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-sans font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                        <ShieldCheck className="w-3 h-3 mr-1 text-amber-600" />
                         {item.source}
                       </span>
                     </td>
 
                     {/* Giá Mua */}
-                    <td className="py-3.5 px-4 text-right font-bold text-slate-200">
+                    <td className="py-3.5 px-4 text-right font-bold text-slate-800">
                       {formatCurrencyVND(item.buyPrice)}
                     </td>
 
                     {/* Biến Động Mua */}
                     <td className="py-3.5 px-4 text-right">
                       <span
-                        className={`inline-flex items-center justify-end text-[11px] font-semibold ${
+                        className={`inline-flex items-center justify-end text-[11px] font-bold ${
                           isBuyUp
-                            ? 'text-emerald-400'
+                            ? 'text-emerald-600'
                             : isBuyDown
-                            ? 'text-rose-400'
+                            ? 'text-rose-600'
                             : 'text-slate-400'
                         }`}
                       >
@@ -122,18 +122,18 @@ export function PriceTable({ prices }: PriceTableProps) {
                     </td>
 
                     {/* Giá Bán */}
-                    <td className="py-3.5 px-4 text-right font-bold text-white">
+                    <td className="py-3.5 px-4 text-right font-extrabold text-slate-900">
                       {formatCurrencyVND(item.sellPrice)}
                     </td>
 
                     {/* Biến Động Bán */}
                     <td className="py-3.5 px-4 text-right">
                       <span
-                        className={`inline-flex items-center justify-end text-[11px] font-semibold ${
+                        className={`inline-flex items-center justify-end text-[11px] font-bold ${
                           isSellUp
-                            ? 'text-emerald-400'
+                            ? 'text-emerald-600'
                             : isSellDown
-                            ? 'text-rose-400'
+                            ? 'text-rose-600'
                             : 'text-slate-400'
                         }`}
                       >
@@ -145,14 +145,14 @@ export function PriceTable({ prices }: PriceTableProps) {
                     </td>
 
                     {/* Chênh Lệch Spread */}
-                    <td className="py-3.5 px-4 text-right font-medium text-gold-400">
+                    <td className="py-3.5 px-4 text-right font-bold text-amber-700">
                       {formatCurrencyVND(item.spread)}
                     </td>
 
                     {/* Cập Nhật */}
-                    <td className="py-3.5 px-4 text-right text-slate-400 font-sans text-[11px]">
+                    <td className="py-3.5 px-4 text-right text-slate-500 font-sans text-[11px]">
                       <span className="inline-flex items-center text-slate-400">
-                        <Clock className="w-3 h-3 mr-1 text-slate-500" />
+                        <Clock className="w-3 h-3 mr-1 text-slate-400" />
                         {formatDateVN(item.updatedAt)}
                       </span>
                     </td>

@@ -37,3 +37,4 @@ export function formatDateVN(dateStr: string | Date): string {
     return String(dateStr);
   }
 }
+

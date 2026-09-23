@@ -174,3 +174,4 @@ export async function executeCrawlerCron(authHeader?: string | null): Promise<Cr
   const crawler = new CrawlerService();
   return await crawler.crawlAll();
 }
+

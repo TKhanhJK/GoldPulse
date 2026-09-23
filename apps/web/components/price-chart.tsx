@@ -71,17 +71,17 @@ export function PriceChart({
     }
   };
 
-  // Tooltip tùy biến
+  // Tooltip tùy biến nền sáng tinh tế
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const date = new Date(label);
       const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
       return (
-        <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg shadow-xl text-xs space-y-1.5 backdrop-blur-md">
-          <p className="text-slate-400 font-medium">{formattedDate}</p>
+        <div className="bg-white border border-slate-200 p-3 rounded-xl shadow-lg text-xs space-y-1.5">
+          <p className="text-slate-500 font-semibold">{formattedDate}</p>
           {payload.map((entry: any, index: number) => (
-            <p key={`tooltip-${index}`} style={{ color: entry.color }} className="font-mono font-semibold">
+            <p key={`tooltip-${index}`} style={{ color: entry.color }} className="font-mono font-bold">
               {entry.name}: {entry.value?.toFixed(2)} triệu/lượng
             </p>
           ))}
@@ -92,15 +92,15 @@ export function PriceChart({
   };
 
   return (
-    <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 shadow-lg backdrop-blur mb-8">
+    <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs mb-8">
       {/* Chart Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-800/80 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-100 gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white tracking-tight flex items-center">
-            <span className="w-2.5 h-2.5 rounded-full bg-gold-500 mr-2.5"></span>
+          <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 mr-2.5"></span>
             Biểu Đồ Biến Động Giá Vàng
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             So sánh biến động song song giữa giá Mua vào và Bán ra theo chuỗi thời gian
           </p>
         </div>
@@ -110,7 +110,7 @@ export function PriceChart({
           <select
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
-            className="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:border-gold-500 transition-colors"
+            className="bg-white border border-slate-200 text-slate-800 text-xs font-medium rounded-xl px-3 py-1.5 focus:outline-none focus:border-amber-500 shadow-2xs transition-colors"
           >
             {AVAILABLE_SYMBOLS.map((s) => (
               <option key={s.symbol} value={s.symbol}>
@@ -120,23 +120,23 @@ export function PriceChart({
           </select>
 
           {/* Range Buttons */}
-          <div className="inline-flex rounded-lg border border-slate-700 bg-slate-800/80 p-0.5 text-xs">
+          <div className="inline-flex rounded-xl border border-slate-200 bg-slate-100 p-0.5 text-xs">
             <button
               onClick={() => setRange('7d')}
-              className={`px-3 py-1 rounded-md font-medium transition-all ${
+              className={`px-3 py-1 rounded-lg font-semibold transition-all ${
                 range === '7d'
-                  ? 'bg-gold-500 text-slate-950 shadow font-semibold'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-amber-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               7 Ngày
             </button>
             <button
               onClick={() => setRange('30d')}
-              className={`px-3 py-1 rounded-md font-medium transition-all ${
+              className={`px-3 py-1 rounded-lg font-semibold transition-all ${
                 range === '30d'
-                  ? 'bg-gold-500 text-slate-950 shadow font-semibold'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-amber-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               30 Ngày
@@ -148,31 +148,31 @@ export function PriceChart({
       {/* Chart Canvas */}
       <div className="w-full h-80 mt-6 relative">
         {loading && (
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-slate-400 text-xs">
-            <Loader2 className="w-6 h-6 animate-spin text-gold-500 mb-2" />
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-2xs z-10 flex flex-col items-center justify-center text-slate-500 text-xs">
+            <Loader2 className="w-6 h-6 animate-spin text-amber-500 mb-2" />
             <span>Đang tải chuỗi dữ liệu lịch sử...</span>
           </div>
         )}
 
         {data.length === 0 && !loading ? (
-          <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 text-xs">
+          <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 text-xs">
             <Calendar className="w-8 h-8 mb-2 opacity-50" />
             Chưa có đủ điểm dữ liệu lịch sử cho loại vàng này
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
               <XAxis
                 dataKey="timestamp"
                 tickFormatter={formatXAxis}
-                stroke="#64748B"
+                stroke="#94A3B8"
                 fontSize={11}
                 tickLine={false}
-                axisLine={{ stroke: '#334155' }}
+                axisLine={{ stroke: '#E2E8F0' }}
               />
               <YAxis
-                stroke="#64748B"
+                stroke="#94A3B8"
                 fontSize={11}
                 tickLine={false}
                 axisLine={false}
@@ -183,25 +183,25 @@ export function PriceChart({
               <Legend
                 verticalAlign="top"
                 align="right"
-                wrapperStyle={{ paddingBottom: 10, fontSize: 12 }}
+                wrapperStyle={{ paddingBottom: 10, fontSize: 12, fontWeight: 500 }}
                 iconType="circle"
               />
               <Line
                 name="Giá Bán ra"
                 type="monotone"
                 dataKey="sellPrice"
-                stroke="#F59E0B"
+                stroke="#D97706"
                 strokeWidth={2.5}
-                dot={{ r: 3, fill: '#F59E0B', strokeWidth: 0 }}
+                dot={{ r: 3, fill: '#D97706', strokeWidth: 0 }}
                 activeDot={{ r: 5, stroke: '#FFF', strokeWidth: 2 }}
               />
               <Line
                 name="Giá Mua vào"
                 type="monotone"
                 dataKey="buyPrice"
-                stroke="#10B981"
+                stroke="#059669"
                 strokeWidth={2.5}
-                dot={{ r: 3, fill: '#10B981', strokeWidth: 0 }}
+                dot={{ r: 3, fill: '#059669', strokeWidth: 0 }}
                 activeDot={{ r: 5, stroke: '#FFF', strokeWidth: 2 }}
               />
             </LineChart>

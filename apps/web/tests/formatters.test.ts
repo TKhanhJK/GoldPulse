@@ -25,3 +25,4 @@ describe('UI Formatters Verification', () => {
     expect(formatted.length).toBeGreaterThan(5);
   });
 });
+

@@ -43,3 +43,4 @@ model CrawlLog {
   error      String?  // Ghi log chi tiết lỗi nếu có
   createdAt  DateTime @default(now())
 }
+
