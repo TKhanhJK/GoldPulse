@@ -172,7 +172,17 @@ export async function executeCrawlerCron(authHeader?: string | null): Promise<Cr
   }
 
   const crawler = new CrawlerService();
-  return await crawler.crawlAll();
+  const crawlResult = await crawler.crawlAll();
+
+  // Tự động kiểm tra và gửi cảnh báo giá cho người dùng sau khi crawl dữ liệu mới
+  try {
+    const { checkAndTriggerPriceAlerts } = await import('./alert-engine');
+    await checkAndTriggerPriceAlerts();
+  } catch (alertErr) {
+    console.error('[CRON ALERT TRIGGER ERROR] Không thể kiểm tra cảnh báo giá sau crawl:', alertErr);
+  }
+
+  return crawlResult;
 }
 
 /**

@@ -143,3 +143,54 @@ export interface PriceForecastResponse {
   forecastPoints: ForecastPoint[];
   historicalPoints: PriceHistoryPoint[];
 }
+
+// 7. User Authentication & Profile DTOs
+export interface UserSession {
+  id: string;
+  email: string;
+  name?: string | null;
+  role: 'USER' | 'ADMIN';
+}
+
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  name?: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  user?: UserSession;
+  token?: string;
+  error?: string;
+}
+
+// 8. Price Alert Engine DTOs
+export interface PriceAlertItem {
+  id: string;
+  userId: string;
+  symbol: string;
+  targetPrice: number;
+  condition: 'ABOVE' | 'BELOW';
+  channel: string;
+  isActive: boolean;
+  lastTriggeredAt?: string | null;
+  createdAt: string;
+}
+
+export interface CreateAlertRequest {
+  symbol: string;
+  targetPrice: number;
+  condition: 'ABOVE' | 'BELOW';
+}
+
+export interface AlertCheckResult {
+  totalChecked: number;
+  totalTriggered: number;
+  triggeredAlertIds: string[];
+}

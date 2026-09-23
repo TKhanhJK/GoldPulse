@@ -44,3 +44,45 @@ model CrawlLog {
   createdAt  DateTime @default(now())
 }
 
+// 4. Tài khoản Người dùng (User Authentication)
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  passwordHash String
+  name         String?
+  role         String       @default("USER") // USER | ADMIN
+  createdAt    DateTime     @default(now())
+  alerts       PriceAlert[]
+}
+
+// 5. Cấu hình Cảnh báo Giá (Price Alert Rules)
+model PriceAlert {
+  id              String     @id @default(uuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  symbol          String     // SJC_1L, DOJI_HN, PNJ_24K...
+  targetPrice     Float      // Mức giá ngưỡng kích hoạt (triệu VNĐ/lượng)
+  condition       String     // ABOVE (Vượt trên) | BELOW (Rơi xuống dưới)
+  channel         String     @default("EMAIL")
+  isActive        Boolean    @default(true)
+  lastTriggeredAt DateTime?
+  createdAt       DateTime   @default(now())
+  logs            AlertLog[]
+
+  @@index([symbol, isActive])
+  @@index([userId])
+}
+
+// 6. Lịch sử Gửi Cảnh báo Giá (Audit Alert Logs)
+model AlertLog {
+  id          String     @id @default(uuid())
+  alertId     String
+  alert       PriceAlert @relation(fields: [alertId], references: [id], onDelete: Cascade)
+  sentPrice   Float      // Mức giá tại thời điểm gửi cảnh báo
+  sentToEmail String
+  status      String     // SUCCESS | FAILED
+  message     String?
+  createdAt   DateTime   @default(now())
+
+  @@index([alertId])
+}

@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import { GoldPriceItem } from '@goldpulse/types';
 import { formatCurrencyVND, formatDelta, formatDateVN } from '@/lib/formatters';
-import { TrendingUp, TrendingDown, Minus, Clock, ShieldCheck } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, Clock, ShieldCheck, Bell } from 'lucide-react';
 
 interface PriceTableProps {
   prices: GoldPriceItem[];
+  onOpenAlert?: (symbol: string) => void;
 }
 
-export function PriceTable({ prices }: PriceTableProps) {
+export function PriceTable({ prices, onOpenAlert }: PriceTableProps) {
   const [selectedSource, setSelectedSource] = useState<string>('ALL');
 
   const sources = ['ALL', 'SJC', 'DOJI', 'PNJ'];
@@ -63,12 +64,13 @@ export function PriceTable({ prices }: PriceTableProps) {
               <th className="py-3 px-4 text-right">Biến Động (Bán)</th>
               <th className="py-3 px-4 text-right">Chênh Lệch</th>
               <th className="py-3 px-4 text-right">Cập Nhật</th>
+              <th className="py-3 px-4 text-center">Cảnh Báo</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 font-mono">
             {filteredPrices.length === 0 ? (
               <tr>
-                <td colSpan={8} className="py-8 text-center text-slate-400 font-sans">
+                <td colSpan={9} className="py-8 text-center text-slate-400 font-sans">
                   Không có dữ liệu giá nào phù hợp với bộ lọc
                 </td>
               </tr>
@@ -155,6 +157,19 @@ export function PriceTable({ prices }: PriceTableProps) {
                         <Clock className="w-3 h-3 mr-1 text-slate-400" />
                         {formatDateVN(item.updatedAt)}
                       </span>
+                    </td>
+
+                    {/* Nút Cảnh Báo Giá */}
+                    <td className="py-3.5 px-4 text-center font-sans">
+                      <button
+                        type="button"
+                        onClick={() => onOpenAlert?.(item.symbol)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200/80 transition-colors"
+                        title={`Đặt cảnh báo giá cho ${item.name}`}
+                      >
+                        <Bell className="w-3 h-3 text-amber-600" />
+                        <span>Đặt chuông</span>
+                      </button>
                     </td>
                   </tr>
                 );
